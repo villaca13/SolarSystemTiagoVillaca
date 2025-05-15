@@ -1,6 +1,7 @@
 package controllers;
 
 
+import models.Planet;
 import utils.ISerializer;
 
 import java.io.File;
@@ -10,9 +11,16 @@ import java.util.List;
 public class PlanetSystemAPI {
 
     //TODO Create a list to store the Planets
+    private ArrayList<Planet> planets;
+
+
+
     //TODO create a File field to story filename
 
     //TODO create constructor to initialise filename and instantiate the planets list
+    public PlanetSystemAPI() {
+        planets = new ArrayList<Planet>();
+    }
 
     //TODO - CRUD Methods
 
