@@ -1,5 +1,7 @@
 package models;
 
+import utils.Utilities;
+
 public class IcePlanet extends Planet{
     // variables
     private String iceComposition;
@@ -26,10 +28,9 @@ public class IcePlanet extends Planet{
         this.iceComposition = "(30 chars)";
     }
 
-    // Methods
-    public String toString(){
-        return"";
-    }
+
+
+
 
     // getter and setters
     /**
@@ -44,14 +45,32 @@ public class IcePlanet extends Planet{
         this.iceComposition = iceComposition;
     }
 
+
+    //---------------------
     // Abstract Methods Implemented
+    //---------------------
     @Override
-    public String displayInfo() {
-        return "";
-    }
+    public String displayInfo() { return "Ice Composition: " + getIceComposition(); }
 
     @Override
-    public String classifyBody() {
-        return "";
+    public String classifyBody() {return ICEPLANETS; }
+
+    //---------------------
+    //  ToString
+    //---------------------
+    /**
+     * Builds a String representing a user friendly representation of the object state
+     * @return Details of the specific planet
+     */
+    public String toString(){
+        return "ID: " + getId()
+                + ", Planet Name: " + getName()
+                + ", Mass: " + getMass()
+                + ", Diameter: " + getDiameter()
+                + ", Average Temperature: " + getAverageTemperature()
+                + ", Surface Type: " + getSurfaceType()
+                + ", Has Liquid Water: " + hasLiquidWater()
+                +", " + classifyBody()
+                +", " + displayInfo();
     }
 }

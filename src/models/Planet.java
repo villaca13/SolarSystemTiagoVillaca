@@ -13,7 +13,12 @@ public abstract class Planet {
     private double mass;
     private double diameter;
     ///  nextId field is used to create the id, it is incremented by 1 everytime a new Planet is created , default value is 1000
-    private int nextId = 1000;
+    private static int nextId = 1000;
+
+
+
+    public final static String ICEPLANETS = "Ice Planet";
+    public final static String GASPLANETS = "Gas Planet";
 
     /**
      * Constructor for objects of class Planet
@@ -28,8 +33,8 @@ public abstract class Planet {
      *
      */
     public Planet(String name, double mass, double diameter, double averageTemperature, String surfaceType, boolean hasLiquidWater ) {
-        this.id = nextId ;
-        this.nextId ++;
+        this.id = nextId;
+        incrementNextId();
         this.name = name ;
         this.mass = mass;
         this.diameter= diameter;
@@ -39,8 +44,8 @@ public abstract class Planet {
     }
     // default values
     public Planet() {
-        this.id = nextId ;
-        this.nextId ++;
+        this.id = nextId;
+        incrementNextId();
         this.name ="truncates to 30 chars" ;
         this.mass = 0.1;
         this.diameter= 0.5;
@@ -58,6 +63,10 @@ public abstract class Planet {
     public double calculateGravity() {
         double xFactor =  Math.pow(6.67430, -11);
         return mass*xFactor/Math.pow(diameter/2,2);
+    }
+
+    public void incrementNextId(){
+        nextId++;
     }
 
     // getters and setters
@@ -79,13 +88,15 @@ public abstract class Planet {
     /**
      * Returns planet next id
      */
-    public int getNextId(){ return nextId; }
+    public int getNextId(){
+          return nextId;
+    }
     /**
      * Updates the Planet nextId to the value passed as a parameter
      * @param nextId The planet next id
      */
     public void setNextId(int nextId){
-        this.nextId = nextId;
+        Planet.nextId = nextId;
     }
 
     // name ***************************************

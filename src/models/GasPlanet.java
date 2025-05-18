@@ -9,6 +9,10 @@ public class GasPlanet extends Planet{
     private String coreComposition;
     private double radiationLevel;
 
+
+
+
+
     /**
      * Constructor for objects of class gas Planet
      *
@@ -80,19 +84,35 @@ public class GasPlanet extends Planet{
     }
 
 
-    // Methods
-    public String toString(){
-        return "";
-    }
-
-    // Abstract methods implemented
+    //---------------------
+    // Abstract Methods Implemented
+    //---------------------
     @Override
     public String displayInfo() {
-        return "";
+        return "Gas Composition: " + this.gasComposition
+                + ", Core Composition: " + this.coreComposition
+                + ", Radiation Level: " + this.radiationLevel;
     }
 
     @Override
-    public String classifyBody() {
-        return "";
+    public String classifyBody() {return GASPLANETS; }
+
+    //---------------------
+    //  ToString
+    //---------------------
+    /**
+     * Builds a String representing a user friendly representation of the object state
+     * @return Details of the specific planet
+     */
+    public String toString(){
+        return "ID: " + getId()
+                + ", Planet Name: " + getName()
+                + ", Mass: " + getMass()
+                + ", Diameter: " + getDiameter()
+                + ", Average Temperature: " + getAverageTemperature()
+                + ", Surface Type: " + getSurfaceType()
+                + ", Has Liquid Water: " + hasLiquidWater()
+                +", " + classifyBody()
+                +", " + displayInfo();
     }
 }
