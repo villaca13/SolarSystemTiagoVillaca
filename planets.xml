@@ -56,5 +56,41 @@
       <coreComposition>5</coreComposition>
       <radiationLevel>5.0</radiationLevel>
     </models.GasPlanet>
+    <models.GasPlanet>
+      <id>1005</id>
+      <name>dfwerf </name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>9</surfaceType>
+      <averageTemperature>9.0</averageTemperature>
+      <mass>9.0</mass>
+      <diameter>0.9</diameter>
+      <gasComposition>9</gasComposition>
+      <coreComposition>9</coreComposition>
+      <radiationLevel>9.0</radiationLevel>
+    </models.GasPlanet>
+    <models.GasPlanet>
+      <id>1006</id>
+      <name>fgwergfq</name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>89</surfaceType>
+      <averageTemperature>89.0</averageTemperature>
+      <mass>89.0</mass>
+      <diameter>89.0</diameter>
+      <gasComposition>89</gasComposition>
+      <coreComposition>89</coreComposition>
+      <radiationLevel>89.0</radiationLevel>
+    </models.GasPlanet>
+    <models.GasPlanet>
+      <id>1007</id>
+      <name>efgwgf</name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>3</surfaceType>
+      <averageTemperature>33.0</averageTemperature>
+      <mass>52.0</mass>
+      <diameter>3.0</diameter>
+      <gasComposition>3</gasComposition>
+      <coreComposition>3</coreComposition>
+      <radiationLevel>65.0</radiationLevel>
+    </models.GasPlanet>
   </list>
 </object-stream>

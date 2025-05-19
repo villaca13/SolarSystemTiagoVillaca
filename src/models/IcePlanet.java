@@ -42,7 +42,11 @@ public class IcePlanet extends Planet{
      * @param iceComposition The new ice planet composition
      */
     public void setIceComposition(String iceComposition) {
-        this.iceComposition = iceComposition;
+        final int maxLength = 30;
+        if(Utilities.validStringlength( iceComposition , maxLength ))
+            this.iceComposition = iceComposition;
+        else
+            this.iceComposition = Utilities.truncateString(iceComposition,maxLength);
     }
 
 

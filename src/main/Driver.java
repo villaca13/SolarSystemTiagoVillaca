@@ -7,9 +7,11 @@ import models.IcePlanet;
 import models.Planet;
 import utils.ScannerInput;
 import utils.Utilities;
+import utils.CoreCompositionUtility;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Driver {
 
@@ -71,8 +73,8 @@ public class Driver {
             switch (option) {
                 case 1 -> runPlanetsMenu();
                 case 2 -> runReportsMenu();
-                case 3 -> exitApp();
-                case 4 -> exitApp();
+                case 3 -> searchPlanets();
+                case 4 -> sortPlanets();
                 case 10 -> loadPlanets();
                 case 11 -> savePlanets();
 
@@ -208,7 +210,6 @@ public class Driver {
 
 
 
-
     //---------------------
     //  General Menu Items
     //---------------------
@@ -287,7 +288,15 @@ public class Driver {
             switch (option) {
                 case 1 -> {
                     gasComposition = ScannerInput.readNextLine("Enter the Gas Composition:  ");
-                    coreComposition = ScannerInput.readNextLine("Enter the Core Composition:  ");
+                    System.out.println("Core Composition Options:");
+                    List<String> coreKeys = CoreCompositionUtility.getCoreKeys();
+                    showListOfOptions(coreKeys);
+                    int coreOption = ScannerInput.readNextInt("Enter the Core Composition:  ");
+                    while (coreOption <1 || coreOption>5 ) {
+                        coreOption = ScannerInput.readNextInt("Wrong code ! Enter the Core Composition:  ");
+                    }
+                    coreComposition = coreKeys.get(coreOption);
+
                     radiationLevel = ScannerInput.readNextDouble("Enter the Radiation Level:  ");
                     GasPlanet newGasPlanet = new GasPlanet(planetName,mass, diameter, averageTemperature, surfaceType, hasLiquidWater,gasComposition, coreComposition, radiationLevel );
                         switch (action){
@@ -336,16 +345,24 @@ public class Driver {
 
     }
 
+    private void showListOfOptions(List<String> list){
+        int i = 1;
+        for(String c : list){
+            System.out.println(i+" "+c);
+            i++;
+        }
+    }
     private void deletePlanet(){
         //Variables
         int indexToDelete;
 
         int option = ScannerInput.readNextInt("""
                 ------------------------------------------------------------------
-                |                      Delete Planet Menu                        |       
+                |                      Delete Planet Menu                        |
                 ------------------------------------------------------------------
-                |   1) Delete by Index                                           | 
-                |   2) Delete by ID                                              |                                                |
+                |   1) Delete by Index                                           |
+                |   2) Delete by ID                                              |
+                |   3) Delete All                                                |
                 |                                                                |  
                 |   0) Return to Planet Object Menu                              |  
                 |                                                                |
@@ -375,6 +392,12 @@ public class Driver {
                         System.out.println("No Planet Deleted.");
                     }
                 }
+                case 3-> {
+                    if(Planets.deleteAllPlanets())
+                        System.out.println("Planets Deleted Successfully.");
+                    else
+                        System.out.println("Planets were not Deleted.");
+                }
                 default -> {
                     System.out.println("Invalid option entered: " + option);
                     //display the delete menu again
@@ -393,10 +416,141 @@ public class Driver {
         System.out.println("List of Planets are:");
         System.out.println(Planets.listAllPlanets());
     }
+    //---------------------------------------------------------------------
+    //  Options 3 and 4 - Search and Sort Planets
+    //---------------------------------------------------------------------
+    //selection sort algorithm
+    private void searchPlanets(){
+        int option = ScannerInput.readNextInt("""
+                ------------------------------------------------------------------
+                |                      Search Planets Menu                       |
+                ------------------------------------------------------------------
+                |   1) Search by ID                                              | 
+                |   2) Search by Index                                           | 
+                |   3) Search the top 5 most radiated Gas Planet                 | 
+                |   4) Search the top 5 biggest planets by diameter              | 
+                |                                                                |  
+                |   0) Return to Main Menu                                       |  
+                |                                                                |
+                ------------------------------------------------------------------
+                ==>>  """);
 
+        while (option != 0) {
+
+            switch (option) {
+                case 1 -> searchPlanetById();
+                case 2 -> searchPlanetByIndex();
+                case 3 -> searchTopFiveRadiationLevel();
+                case 4 -> searchTopFiveDiameter();
+                default -> System.out.println("Invalid option entered: " + option);
+            }
+
+            //pause the program so that the user can read what we just printed to the terminal window
+            ScannerInput.readNextLine("\nPress enter key to continue...");
+
+            //display the main menu again
+            searchPlanets();
+        }
+        runMainMenu();
+
+    }
+    //selection sort algorithm
+    private void searchPlanetById() {
+        int idToFind = ScannerInput.readNextInt("Enter the Planet ID:  ");
+        if(Planets.isValidId(idToFind)){
+            Planet planetFound = Planets.getPlanetById(idToFind);
+            System.out.println("Planet found:");
+            System.out.println( planetFound);
+
+
+
+        }
+        else {
+            System.out.println("No planet found!");
+
+            //pause the program so that the user can read what we just printed to the terminal window
+            ScannerInput.readNextLine("\nPress enter key to continue...");
+            searchPlanets();
+        }
+    }
+
+    private void searchPlanetByIndex() {
+        int indexToFind = ScannerInput.readNextInt("Enter the Planet Index:  ");
+        Planet planetFound = Planets.getPlanetByIndex(indexToFind);
+        if(planetFound != null){
+            System.out.println("Planet found:");
+            System.out.println( planetFound);
+        }
+        else{
+            System.out.println("No planet found!");
+        }
+    }
+
+    private void searchTopFiveRadiationLevel(){
+        System.out.println("List of the top 5 most radiated Gas Planet:");
+        List<Planet> top5RadiationLevel = Planets.topFiveHighestRadiationGasPlanet();
+        if (top5RadiationLevel != null){
+            for (Planet planet : top5RadiationLevel) {
+                System.out.println(planet);
+            }
+        }else
+            System.out.println("List is empty.");
+    }
+
+    private void searchTopFiveDiameter(){
+        System.out.println("List of the top 5 biggest planets by diameter:");
+        List<Planet> top5Diameter = Planets.topFiveBiggestPlanet();
+        if (top5Diameter != null){
+            for (Planet planet : top5Diameter) {
+                System.out.println(planet);
+            }
+        }else
+            System.out.println("List is empty.");
+    }
+
+    private void sortPlanets(){
+        int option = ScannerInput.readNextInt("""
+                ------------------------------------------------------------------
+                |                      Sort Planets Menu                         |       
+                ------------------------------------------------------------------
+                |   1) Sort by Diameter Ascending                                | 
+                |   2) Sort by Diameter Descending                               | 
+                |                                                                |  
+                |   0) Return to Main Menu                                       |  
+                |                                                                |
+                ------------------------------------------------------------------
+                ==>>  """);
+
+        while (option != 0) {
+
+            switch (option) {
+                case 1 -> sortPlanetByDiameterAscending();
+                case 2 -> sortPlanetByDiameterDescending();
+
+                default -> System.out.println("Invalid option entered: " + option);
+            }
+
+            //pause the program so that the user can read what we just printed to the terminal window
+            ScannerInput.readNextLine("\nPress enter key to continue...");
+
+            //display the main menu again
+            sortPlanets();
+        }
+        runMainMenu();
+    }
+
+    private void sortPlanetByDiameterAscending() {
+        Planets.sortByDiameterAscending();
+        System.out.println( Planets.listAllPlanets());
+    }
+    //selection sort algorithm
+    private void sortPlanetByDiameterDescending() {
+        Planets.sortByDiameterDescending();
+        System.out.println( Planets.listAllPlanets());
+    }
 
     //---------------------------------------------------------------------
-    //  Options 10 and 11 - Save and Load Posts
+    //  Options 10 and 11 - Save and Load Planets
     //---------------------------------------------------------------------
 
     //save all the posts in the newsFeed to a file on the hard disk

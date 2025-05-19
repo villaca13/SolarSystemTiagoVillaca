@@ -1,8 +1,6 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CoreCompositionUtility {
 
@@ -15,7 +13,6 @@ public class CoreCompositionUtility {
         put("Compressed Hydrogen".toUpperCase(), "The outermost layer of gas giants is made up of compressed molecular hydrogen");
         put("Ice Giant".toUpperCase(), "Their interiors are believed to contain a mixture of rock, water, methane, and ammonia");
     }};
-
 
     public static boolean isValidCoreType(String type) {
         //must not be case sensitive
@@ -30,5 +27,10 @@ public class CoreCompositionUtility {
             coreTypes.get(type);
 
         return "No Description for this type";
+    }
+
+    public static List<String> getCoreKeys() {
+        List<String> coreKeys = new ArrayList<>(coreTypes.keySet());
+        return coreKeys;
     }
 }

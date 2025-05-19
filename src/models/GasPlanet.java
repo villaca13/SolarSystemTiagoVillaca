@@ -1,6 +1,7 @@
 package models;
 
 import utils.Utilities;
+import utils.CoreCompositionUtility;
 
 public class GasPlanet extends Planet{
 
@@ -54,7 +55,11 @@ public class GasPlanet extends Planet{
      * @param gasComposition The new gas planet composition
      */
     public void setGasComposition(String gasComposition) {
-        this.gasComposition = gasComposition;
+        final int maxLength = 20;
+        if(Utilities.validStringlength( gasComposition , maxLength ))
+            this.gasComposition = gasComposition;
+        else
+            this.gasComposition = Utilities.truncateString(gasComposition,maxLength);
     }
 
     // Core Composition ************************************
@@ -67,7 +72,10 @@ public class GasPlanet extends Planet{
      * @param coreComposition The new gas planet core composition
      */
     public void setCoreComposition(String coreComposition) {
-        this.coreComposition = coreComposition;
+        if (CoreCompositionUtility.isValidCoreType(coreComposition) )
+            this.coreComposition = coreComposition;
+        else
+            this.coreComposition = "UNKNOWN";
     }
 
     // radiation level **************************************
@@ -80,7 +88,10 @@ public class GasPlanet extends Planet{
      * @param radiationLevel The new gas planet radiation level
      */
     public void setRadiationLevel(double radiationLevel) {
-        this.radiationLevel = radiationLevel;
+        if(Utilities.validRange(radiationLevel,0.01, 200.05 )){
+            this.radiationLevel = radiationLevel;
+        }else
+            this.radiationLevel =0.9;
     }
 
 

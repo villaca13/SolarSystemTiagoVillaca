@@ -52,6 +52,16 @@ public class PlanetSystemAPI {
     }
 
     /**
+     * Delete a Planet from the ArrayList, if it exists, at the index passed as a parameter.
+     *
+     * @return true if The planet object has been cleared or false if it is not cleared
+     */
+    public boolean deleteAllPlanets() {
+        List<Planet> toDelete = planetList;
+        return planetList.removeAll(toDelete);
+    }
+
+    /**
      * Delete a Planet from the ArrayList, if it exists, at the ID passed as a parameter.
      *
      * @param idToDelete ID of the Planet object in the ArrayList
@@ -88,6 +98,25 @@ public class PlanetSystemAPI {
         return getPlanetByIndex(index);
     }
 
+    /**
+     * get a list of planet objects by Type
+     * If the list is empty, return null.
+     *
+     * @param planetType of the Planet object in the ArrayList
+     * @return a list of planet objects By the type passed as parameter or null if  the list is empty
+     */
+    public List<Planet> getPlanetsByType(String planetType) {
+        if(numberOfPlanets()>0){
+            List<Planet> planetByType = new ArrayList<>();
+            for(Planet pl : planetList){
+                if(pl.classifyBody().equals(planetType)){
+                    planetByType.add(pl);
+                }
+            }
+            return planetByType;
+        }else
+            return null;
+    }
 
 
     // TODO Reporting Methods
@@ -230,7 +259,7 @@ public class PlanetSystemAPI {
         if(planetList.isEmpty())
             return 0;
         else
-            return countPlanets(planetList.get(0).GASPLANETS);
+            return countPlanets(Planet.GASPLANETS);
     }
     /**
      * Returns number of ice planets
@@ -239,21 +268,9 @@ public class PlanetSystemAPI {
         if(planetList.isEmpty())
             return 0;
         else
-            return countPlanets(planetList.get(0).ICEPLANETS);
+            return countPlanets(Planet.ICEPLANETS);
     }
 
-
-    //TODO validation method below:
-    //the following is isValidId can be updated
-    //to suit your code - checks is the id already there in the list
-
-    public boolean isValidId(int id) {
-        for (Planet pl : planetList) {
-            if (pl.getId() == id)
-                return false;
-        }
-            return true;
-        }
 
 
     //TODO get Planet methods
@@ -335,9 +352,95 @@ public class PlanetSystemAPI {
     }
 
     //TODO - sort methods
+    /**
+     * Selection sort algorithm for sorting the arraylist of planets by diamenter ascending/Descending.
+     */
+    public void sortByDiameterDescending(){
+        for (int i = planetList.size() - 1; i >= 0; i--) {
+            int highestIndex = 0;
+            for (int j = 0; j <= i; j++) {
+                if (planetList.get(j).getDiameter() < planetList.get(highestIndex).getDiameter()) {
+                    highestIndex = j;
+                }
+            }
+            swapPlanets(planetList , i, highestIndex);
+        }
+
+    }
+    public void sortByDiameterAscending(){
+        for (int i = planetList.size() - 1; i >= 0; i--) {
+            int highestIndex = 0;
+            for (int j = 0; j <= i; j++) {
+                if (planetList.get(j).getDiameter() > planetList.get(highestIndex).getDiameter()) {
+                    highestIndex = j;
+                }
+            }
+            swapPlanets(planetList , i, highestIndex);
+        }
+    }
+    /**
+     * Selection sort algorithm for sorting the arraylist of planets by radiation Descending.
+     *
+     * @return a list of Gas Planets sorted by Radiation level or null if a list is empty
+     */
+    public List<Planet> sortByRadiationDescending(){
+        if(numberOfGasPlanets()>0){
+            List<Planet> gasPlanets = getPlanetsByType( Planet.GASPLANETS);
+
+            for (int i = gasPlanets.size()  - 1; i >= 0; i--) {
+                int highestIndex = 0;
+
+                for (int j = 0; j <= i; j++) {
+                    if ( ((GasPlanet) gasPlanets.get(j)).getRadiationLevel() < ((GasPlanet) gasPlanets.get(highestIndex)).getRadiationLevel()) {
+                        highestIndex = j;
+                    }
+                }
+                swapPlanets(gasPlanets , i, highestIndex);
+            }
+            return gasPlanets;
+        }else
+            return null;
+    }
+
+    private void swapPlanets(List<Planet> planets, int i, int j) {
+        Planet smaller = planets.get(i);
+        Planet bigger = planets.get(j);
+
+        planets.set(i,bigger);
+        planets.set(j,smaller);
+    }
 
     //TODO Top 5 methods
+    public List<Planet> topFiveHighestRadiationGasPlanet(){
+        List<Planet> gasPlanetTop5;
+        if (numberOfGasPlanets() > 0 ){
+            gasPlanetTop5 = sortByRadiationDescending();
+            int limit = Math.min(gasPlanetTop5.size(), 5);
 
+            for ( int i= 0; i< gasPlanetTop5.size() ; i++ ){
+                if (i >= 5){
+                    gasPlanetTop5.remove(i);
+                }
+            }
+            return gasPlanetTop5;
+        }else
+            return null;
+    }
+
+    public List<Planet> topFiveBiggestPlanet(){
+        if (!planetList.isEmpty()){
+            List<Planet> planetTop5 = new ArrayList<>();
+            int limit = Math.min(planetList.size(), 5);
+
+            sortByDiameterDescending();
+
+            for ( int i= 0; i< limit ; i++ ){
+                planetTop5.add(planetList.get(i));
+            }
+            return planetTop5;
+        }else
+            return null;
+    }
 
     // TODO Persistence methods
     /**
@@ -359,7 +462,7 @@ public class PlanetSystemAPI {
         //doing the actual serialisation to an XML file
         ObjectInputStream in = xstream.createObjectInputStream(new FileReader(fileName()));
         planetList = (List<Planet>) in.readObject();
-        planetList.get(0).setNextId(highestPlanetId()+1);
+        Planet.setNextId(highestPlanetId()+1);
         in.close();
     }
     /**
@@ -385,6 +488,12 @@ public class PlanetSystemAPI {
     //---------------------
     //  Helper Methods
     //---------------------
+    /**
+     * Find the Index by the Planet Id passed as a parameter
+     *
+     * @param id of planet object
+     * @return The index of Planet object in the list
+     */
     public int findIndexById(int id){
         int index = 0;
         for(Planet planet : planetList) {
@@ -394,14 +503,20 @@ public class PlanetSystemAPI {
         }
         return index;
     }
+    /**
+     * Method to count planets by type (ICE or GAS) in the list.
+     *
+     * @param planetType is to identify if it is Ice or Gas
+     * @return The counter of Planet objects found in the list
+     */
     private int countPlanets(String planetType){
-        int i = 0;
+        int count = 0;
         for(Planet planet : planetList) {
             if (planet.classifyBody().equals(planetType)) {
-                i++;
+                count++;
             }
         }
-        return i;
+        return count;
     }
     /**
      * Find an Ice Planet object at a specific index location.
@@ -411,9 +526,13 @@ public class PlanetSystemAPI {
      * @return The Ice Planet object or null if no object is at the index location
      */
     public IcePlanet findIcePlanet(int id) {
-        int index =findIndexById(id);
-        if (isValidIndex( planetList , index)) {
-            return (IcePlanet) planetList.get(index);
+        if (isValidId(id)){
+            int index = findIndexById(id);
+            if (isValidIndex( planetList , index)) {
+                return (IcePlanet) planetList.get(index);
+            }
+            else
+                return null;
         }
         else
             return null;
@@ -426,9 +545,14 @@ public class PlanetSystemAPI {
      * @return The Gas Planet object or null if no object is at the index location
      */
     public GasPlanet findGasPlanet(int id) {
-        int index =findIndexById(id);
-        if (isValidIndex( planetList , index)) {
-            return (GasPlanet) planetList.get(index);
+        if (isValidId(id)){
+            int index =findIndexById(id);
+            if (isValidIndex( planetList , index)) {
+                return (GasPlanet) planetList.get(index);
+            }
+            else
+                return null;
+
         }
         else
             return null;
@@ -451,6 +575,17 @@ public class PlanetSystemAPI {
         } else {
             return 1000;
         }
+    }
+    //TODO validation method below:
+    //the following is isValidId can be updated
+    //to suit your code - checks is the id already there in the list
+
+    public boolean isValidId(int id) {
+        for (Planet pl : planetList) {
+            if (pl.getId() == id)
+                return true;
+        }
+        return false;
     }
 
 }   

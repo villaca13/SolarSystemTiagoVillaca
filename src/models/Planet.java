@@ -2,6 +2,7 @@ package models;
 
 import utils.Utilities;
 
+
 public abstract class Planet {
 
     // variables
@@ -33,7 +34,7 @@ public abstract class Planet {
      *
      */
     public Planet(String name, double mass, double diameter, double averageTemperature, String surfaceType, boolean hasLiquidWater ) {
-        this.id = nextId;
+        this.id =getNextId();
         incrementNextId();
         this.name = name ;
         this.mass = mass;
@@ -44,7 +45,7 @@ public abstract class Planet {
     }
     // default values
     public Planet() {
-        this.id = nextId;
+        this.id = getNextId();
         incrementNextId();
         this.name ="truncates to 30 chars" ;
         this.mass = 0.1;
@@ -81,23 +82,22 @@ public abstract class Planet {
      * @param id The new planet id
      */
     public void setId(int id){
-        this.id = id;
+        // set 1000 if id is < 1000
+        this.id = Math.max(id, 1000);
     }
 
     // nextId ************************************
     /**
      * Returns planet next id
      */
-    public int getNextId(){
+    public static int getNextId(){
           return nextId;
     }
     /**
      * Updates the Planet nextId to the value passed as a parameter
      * @param nextId The planet next id
      */
-    public void setNextId(int nextId){
-        Planet.nextId = nextId;
-    }
+    public static void setNextId(int nextId){ Planet.nextId = nextId;}
 
     // name ***************************************
     /**
@@ -109,7 +109,11 @@ public abstract class Planet {
      * @param name The new planet name
      */
     public void setName(String name) {
-        this.name = name;
+        final int maxLength = 30;
+        if(Utilities.validStringlength( name , maxLength ))
+            this.name = name;
+        else
+            this.name = Utilities.truncateString(name,maxLength);
     }
 
     // Surface type  ****************************
@@ -135,7 +139,10 @@ public abstract class Planet {
      * @param averageTemperature The new planet average temperature
      */
     public void setAverageTemperature(double averageTemperature) {
-        this.averageTemperature = averageTemperature;
+        if(Utilities.validRange(averageTemperature,-400, 400)){
+            this.averageTemperature = averageTemperature;
+        }else
+            this.averageTemperature =0;
     }
 
     // mass **************************************
@@ -148,7 +155,10 @@ public abstract class Planet {
      * @param mass The new planet mass
      */
     public void setMass(double mass) {
-        this.mass = mass;
+        if(Utilities.validRange(mass,0.1, 9999999 )){
+            this.mass = mass;
+        }else
+            this.mass =0.1;
     }
 
     // Diameter **************************************
@@ -161,7 +171,10 @@ public abstract class Planet {
      * @param diameter The new planet diameter
      */
     public void setDiameter(double diameter) {
-        this.diameter = diameter;
+        if(Utilities.validRange(diameter,0.5, 9999999 )){
+            this.diameter = diameter;
+        }else
+            this.diameter =0.5;
     }
 
     // has liquid water *************************
@@ -176,6 +189,4 @@ public abstract class Planet {
     public void setHasLiquidWater(boolean hasLiquidWater) {
         this.hasLiquidWater = hasLiquidWater;
     }
-
-
 }
