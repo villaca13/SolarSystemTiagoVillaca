@@ -1,45 +1,43 @@
 
 /* readme.txt
 
-** EXAMPLE ONLY **
-** REPLACE THIS ENTIRE TEMPLATE WITH THE DETAILS IN RUBRIC
 ******************
 
 Name : Tiago Linhares Villaca
 
-Student Number:
+Student Number: W20114785
 
-Part A - Inheritance Hierarchy (x / 24)
+Part A - Inheritance Hierarchy (24 / 24)
 -----------------------------
 
-Planets (x/10)
-IcePlanet( x / 8)
-GasPlanet ( x / 8)
+Planets (8/8)
+IcePlanet( 8 / 8)
+GasPlanet ( 8 / 8)
 
 
-Part B - PlanetSystemAPI  (X /34)
+Part B - PlanetSystemAPI  (34 /34)
 -----------------------------
-basic CRUD (x /13 )
-reporting/numberOf methods (x / 8)
-validation methods  & persistence  (x / 5)
-sorting / top 5 (x / 8)
+basic CRUD (13 /13 )
+reporting/numberOf methods (8 / 8)
+validation methods  & persistence  (5 / 5)
+sorting / top 5 (8 / 8)
 
 
-Part C - UX (user experience) and Driver:Mark (X /23)
+Part C - UX (user experience) and Driver:Mark (23 /23)
 -----------------------------
-Good Menu Structure  (x / 4)
-ArrayListCRUD  - all  types handled  (x / 7)
-Reports Menu - for all planets (x / 7)
-Search, Sort, top5   (x / 4)
-Save, Load, Exit   (x / 1)
+Good Menu Structure  (4 / 4)
+ArrayListCRUD  - all  types handled  (7 / 7)
+Reports Menu - for all planets (7 / 7)
+Search, Sort, top5   (4 / 4)
+Save, Load, Exit   (1 / 1)
 
 
 
-Part D - DX (Overall style) (11%)	 (X /11)
+Part D - DX (Overall style) (11%)	 (11 /11)
 -----------------------------
-Code correctly commented (x / 3)
-Standard naming, indentation, DRY Code etc. (x / 5)
-Javadoc written for PlanetSystemAPI  (x / 3)
+Code correctly commented (3 / 3)
+Standard naming, indentation, DRY Code etc. (5 / 5)
+Javadoc written for PlanetSystemAPI  (3 / 3)
 
 Part E - For Extra Credit (10%)  (x / 10)
 -----------------------------

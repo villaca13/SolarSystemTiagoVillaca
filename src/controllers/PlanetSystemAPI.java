@@ -16,7 +16,7 @@ import java.util.List;
 import static utils.Utilities.isValidIndex;
 
 
-public class PlanetSystemAPI {
+public class PlanetSystemAPI implements ISerializer {
 
 
     //TODO Create a list to store the Planets
@@ -24,6 +24,9 @@ public class PlanetSystemAPI {
 
 
     //TODO create a File field to story filename
+    public String fileName(){
+        return "planets.xml";
+    }
 
     //TODO create constructor to initialise filename and instantiate the planets list
     public PlanetSystemAPI() { planetList = new ArrayList<Planet>(); }
@@ -478,9 +481,7 @@ public class PlanetSystemAPI {
         out.close();
     }
 
-    public String fileName(){
-        return "planets.xml";
-    }
+
 
 
 

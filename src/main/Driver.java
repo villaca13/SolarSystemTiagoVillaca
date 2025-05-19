@@ -345,13 +345,7 @@ public class Driver {
 
     }
 
-    private void showListOfOptions(List<String> list){
-        int i = 1;
-        for(String c : list){
-            System.out.println(i+" "+c);
-            i++;
-        }
-    }
+
     private void deletePlanet(){
         //Variables
         int indexToDelete;
@@ -593,6 +587,12 @@ public class Driver {
         System.out.println("Exiting....");
         System.exit(0);
     }
-
+    private void showListOfOptions(List<String> list){
+        int i = 1;
+        for(String c : list){
+            System.out.println(i+" "+c);
+            i++;
+        }
+    }
 }
 

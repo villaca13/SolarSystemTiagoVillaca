@@ -16,8 +16,6 @@ public abstract class Planet {
     ///  nextId field is used to create the id, it is incremented by 1 everytime a new Planet is created , default value is 1000
     private static int nextId = 1000;
 
-
-
     public final static String ICEPLANETS = "Ice Planet";
     public final static String GASPLANETS = "Gas Planet";
 
@@ -126,7 +124,11 @@ public abstract class Planet {
      * @param surfaceType The new planet surface type
      */
     public void setSurfaceType(String surfaceType) {
-        this.surfaceType = surfaceType;
+        final int maxLength = 20;
+        if(Utilities.validStringlength( surfaceType , maxLength ))
+            this.surfaceType = surfaceType;
+        else
+            this.surfaceType = Utilities.truncateString(surfaceType,maxLength);
     }
 
     // average temperature ***************************
