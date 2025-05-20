@@ -465,7 +465,13 @@ public class PlanetSystemAPI implements ISerializer {
         //doing the actual serialisation to an XML file
         ObjectInputStream in = xstream.createObjectInputStream(new FileReader(fileName()));
         planetList = (List<Planet>) in.readObject();
+
+        /**
+         *
+         * get the highest id from the list loaded and set the next ID
+         */
         Planet.setNextId(highestPlanetId()+1);
+
         in.close();
     }
     /**
@@ -480,11 +486,6 @@ public class PlanetSystemAPI implements ISerializer {
         out.writeObject(planetList);
         out.close();
     }
-
-
-
-
-
 
     //---------------------
     //  Helper Methods
@@ -567,7 +568,7 @@ public class PlanetSystemAPI implements ISerializer {
      */
     public int highestPlanetId() {
         if (!planetList.isEmpty()) {
-            int highestPlanetId = planetList.get(0).getId();
+            int highestPlanetId = planetList.getFirst().getId();
             for (Planet planets : planetList) {
                 if (planets.getId() > highestPlanetId)
                     highestPlanetId = planets.getId();

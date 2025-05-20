@@ -8,6 +8,7 @@
       <averageTemperature>9.0</averageTemperature>
       <mass>9.0</mass>
       <diameter>0.9</diameter>
+      <gravity>0.0</gravity>
       <gasComposition>9</gasComposition>
       <coreComposition>9</coreComposition>
       <radiationLevel>9.0</radiationLevel>
@@ -20,6 +21,7 @@
       <averageTemperature>4.0</averageTemperature>
       <mass>1.0</mass>
       <diameter>1.0</diameter>
+      <gravity>0.0</gravity>
       <iceComposition>4</iceComposition>
     </models.IcePlanet>
     <models.GasPlanet>
@@ -30,6 +32,7 @@
       <averageTemperature>1.0</averageTemperature>
       <mass>1.0</mass>
       <diameter>1.0</diameter>
+      <gravity>0.0</gravity>
       <gasComposition>1</gasComposition>
       <coreComposition>1</coreComposition>
       <radiationLevel>1.0</radiationLevel>
@@ -42,6 +45,7 @@
       <averageTemperature>2.0</averageTemperature>
       <mass>3.0</mass>
       <diameter>2.0</diameter>
+      <gravity>0.0</gravity>
       <gasComposition>2</gasComposition>
       <coreComposition>2</coreComposition>
       <radiationLevel>2.0</radiationLevel>
@@ -54,6 +58,7 @@
       <averageTemperature>33.0</averageTemperature>
       <mass>52.0</mass>
       <diameter>3.0</diameter>
+      <gravity>0.0</gravity>
       <gasComposition>3</gasComposition>
       <coreComposition>3</coreComposition>
       <radiationLevel>65.0</radiationLevel>
@@ -66,6 +71,7 @@
       <averageTemperature>5.0</averageTemperature>
       <mass>2.0</mass>
       <diameter>5.0</diameter>
+      <gravity>0.0</gravity>
       <gasComposition>5</gasComposition>
       <coreComposition>5</coreComposition>
       <radiationLevel>5.0</radiationLevel>
@@ -78,6 +84,7 @@
       <averageTemperature>2.0</averageTemperature>
       <mass>5.0</mass>
       <diameter>5.0</diameter>
+      <gravity>0.0</gravity>
       <iceComposition>2</iceComposition>
     </models.IcePlanet>
     <models.GasPlanet>
@@ -88,9 +95,58 @@
       <averageTemperature>89.0</averageTemperature>
       <mass>89.0</mass>
       <diameter>89.0</diameter>
+      <gravity>0.0</gravity>
       <gasComposition>89</gasComposition>
       <coreComposition>89</coreComposition>
       <radiationLevel>89.0</radiationLevel>
     </models.GasPlanet>
+    <models.GasPlanet>
+      <id>1008</id>
+      <name>truncates to 30 chars</name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>(20 chars)</surfaceType>
+      <averageTemperature>0.0</averageTemperature>
+      <mass>0.1</mass>
+      <diameter>0.5</diameter>
+      <gravity>0.0</gravity>
+      <gasComposition>(20 chars)</gasComposition>
+      <coreComposition>UNKNOWN</coreComposition>
+      <radiationLevel>0.9</radiationLevel>
+    </models.GasPlanet>
+    <models.IcePlanet>
+      <id>1009</id>
+      <name>truncates to 30 chars</name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>(20 chars)</surfaceType>
+      <averageTemperature>0.0</averageTemperature>
+      <mass>0.1</mass>
+      <diameter>0.5</diameter>
+      <gravity>0.0</gravity>
+      <iceComposition>(30 chars)</iceComposition>
+    </models.IcePlanet>
+    <models.GasPlanet>
+      <id>1010</id>
+      <name>defd</name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>2</surfaceType>
+      <averageTemperature>2.0</averageTemperature>
+      <mass>2.0</mass>
+      <diameter>2.0</diameter>
+      <gravity>0.0</gravity>
+      <gasComposition>2</gasComposition>
+      <coreComposition>ICE GIANT</coreComposition>
+      <radiationLevel>2.0</radiationLevel>
+    </models.GasPlanet>
+    <models.IcePlanet>
+      <id>1011</id>
+      <name>rferf</name>
+      <hasLiquidWater>false</hasLiquidWater>
+      <surfaceType>8</surfaceType>
+      <averageTemperature>8.0</averageTemperature>
+      <mass>5.0</mass>
+      <diameter>4.0</diameter>
+      <gravity>0.0</gravity>
+      <iceComposition>1</iceComposition>
+    </models.IcePlanet>
   </list>
 </object-stream>

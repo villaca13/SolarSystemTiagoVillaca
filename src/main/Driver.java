@@ -71,7 +71,7 @@ public class Driver {
         while (option != 0) {
 
             switch (option) {
-                case 1 -> runPlanetsMenu();
+                case 1 -> planetsMenu();
                 case 2 -> runReportsMenu();
                 case 3 -> searchPlanets();
                 case 4 -> sortPlanets();
@@ -94,7 +94,7 @@ public class Driver {
     //---------------------
     //  PLANETS Menu Items
     //---------------------
-    private int planetsMenu() {
+    private void planetsMenu() {
 
         //TODO write menu that user will see
         int option = ScannerInput.readNextInt("""
@@ -108,13 +108,8 @@ public class Driver {
                 |   0) Return to Main Menu                                       |  
                 ------------------------------------------------------------------
                 ==>>  """);
-        return option;
-    }
 
-    private void runPlanetsMenu() {
-        int option = planetsMenu();
         //TODO - write code to call appropiate method based on value in option
-
         while (option != 0) {
 
             switch (option) {
@@ -130,9 +125,13 @@ public class Driver {
             ScannerInput.readNextLine("\nPress enter key to continue...");
 
             //display the main menu again
-            option = planetsMenu();
+            planetsMenu();
         }
         runMainMenu();
+    }
+
+    private void runPlanetsMenu() {
+
     }
 
     //---------------------
@@ -274,42 +273,62 @@ public class Driver {
             }
 
 
-            // New Planet Object Menu
-            planetName = ScannerInput.readNextLine("Enter the Planet Name:  ");
-            mass = ScannerInput.readNextInt("Enter the Planet Mass:  ");
-            diameter = ScannerInput.readNextDouble("Enter the Planet Diameter:  ");
-            averageTemperature = ScannerInput.readNextDouble("Enter the Planet Average Temperature:  ");
-            surfaceType = ScannerInput.readNextLine("Enter the Planet Surface Type:  ");
 
             //Ask the user to type in either a Y or an N.  This is then
             //converted to either a True or a False (i.e. a boolean value).
-            hasLiquidWater = Utilities.YNtoBoolean(ScannerInput.readNextChar("Does this planet have Liquid Water?(y/n): "));
+            if(action == 'A' && Utilities.YNtoBoolean(ScannerInput.readNextChar("Create Planet with Default values?(y/n): "))){
+                switch (option) {
+                    case 1 -> {
+                        GasPlanet newGasPlanet = new GasPlanet( );
+                        isAdded = Planets.addPlanetObject (newGasPlanet);
+                        System.out.println(newGasPlanet);
 
-            switch (option) {
-                case 1 -> {
-                    gasComposition = ScannerInput.readNextLine("Enter the Gas Composition:  ");
-                    System.out.println("Core Composition Options:");
-                    List<String> coreKeys = CoreCompositionUtility.getCoreKeys();
-                    showListOfOptions(coreKeys);
-                    int coreOption = ScannerInput.readNextInt("Enter the Core Composition:  ");
-                    while (coreOption <1 || coreOption>5 ) {
-                        coreOption = ScannerInput.readNextInt("Wrong code ! Enter the Core Composition:  ");
                     }
-                    coreComposition = coreKeys.get(coreOption);
+                    case 2 ->{
+                        IcePlanet newIcePlanet = new IcePlanet();
+                        isAdded = Planets.addPlanetObject (newIcePlanet);
+                        System.out.println(newIcePlanet);
+                    }
+                }
+            }
+            else {
+                // New Planet Object Menu
+                planetName = ScannerInput.readNextLine("Enter the Planet Name:  ");
+                mass = ScannerInput.readNextInt("Enter the Planet Mass:  ");
+                diameter = ScannerInput.readNextDouble("Enter the Planet Diameter:  ");
+                averageTemperature = ScannerInput.readNextDouble("Enter the Planet Average Temperature:  ");
+                surfaceType = ScannerInput.readNextLine("Enter the Planet Surface Type:  ");
 
-                    radiationLevel = ScannerInput.readNextDouble("Enter the Radiation Level:  ");
-                    GasPlanet newGasPlanet = new GasPlanet(planetName,mass, diameter, averageTemperature, surfaceType, hasLiquidWater,gasComposition, coreComposition, radiationLevel );
-                        switch (action){
-                            case 'U' -> isUpdated = Planets.updateGasPlanet(idToUpdate,  newGasPlanet);
-                            case 'A' -> isAdded = Planets.addPlanetObject (newGasPlanet);
+                //Ask the user to type in either a Y or an N.  This is then
+                //converted to either a True or a False (i.e. a boolean value).
+                hasLiquidWater = Utilities.YNtoBoolean(ScannerInput.readNextChar("Does this planet have Liquid Water?(y/n): "));
+
+                switch (option) {
+                    case 1 -> {
+                        gasComposition = ScannerInput.readNextLine("Enter the Gas Composition:  ");
+                        System.out.println("Core Composition Options:");
+                        List<String> coreKeys = CoreCompositionUtility.getCoreKeys();
+                        showListOfOptions(coreKeys);
+                        int coreOption = ScannerInput.readNextInt("Enter the Core Composition:  ");
+                        while (coreOption <1 || coreOption>5 ) {
+                            coreOption = ScannerInput.readNextInt("Wrong code ! Enter the Core Composition:  ");
                         }
-                    }
-                case 2 -> {
-                    iceComposition = ScannerInput.readNextLine("Enter the Ice Composition:  ");
-                    IcePlanet newIcePlanet = new IcePlanet(planetName,mass, diameter, averageTemperature, surfaceType, hasLiquidWater, iceComposition);
-                    switch (action){
-                        case 'U' -> isUpdated = Planets.updateIcePlanet(idToUpdate, newIcePlanet);
-                        case 'A' -> isAdded = Planets.addPlanetObject (newIcePlanet);
+                        coreComposition = coreKeys.get(coreOption);
+
+                        radiationLevel = ScannerInput.readNextDouble("Enter the Radiation Level:  ");
+                        GasPlanet newGasPlanet = new GasPlanet(planetName,mass, diameter, averageTemperature, surfaceType, hasLiquidWater,gasComposition, coreComposition, radiationLevel );
+                            switch (action){
+                                case 'U' -> isUpdated = Planets.updateGasPlanet(idToUpdate,  newGasPlanet);
+                                case 'A' -> isAdded = Planets.addPlanetObject (newGasPlanet);
+                            }
+                        }
+                    case 2 -> {
+                        iceComposition = ScannerInput.readNextLine("Enter the Ice Composition:  ");
+                        IcePlanet newIcePlanet = new IcePlanet(planetName,mass, diameter, averageTemperature, surfaceType, hasLiquidWater, iceComposition);
+                        switch (action){
+                            case 'U' -> isUpdated = Planets.updateIcePlanet(idToUpdate, newIcePlanet);
+                            case 'A' -> isAdded = Planets.addPlanetObject (newIcePlanet);
+                        }
                     }
                 }
             }
@@ -402,7 +421,7 @@ public class Driver {
             //pause the program so that the user can read what we just printed to the terminal window
             ScannerInput.readNextLine("\nPress enter key to continue...");
             //display the add menu again
-            runPlanetsMenu();
+            planetsMenu();
         }
     }
 

@@ -13,6 +13,7 @@ public abstract class Planet {
     private double averageTemperature;
     private double mass;
     private double diameter;
+    private double gravity;
     ///  nextId field is used to create the id, it is incremented by 1 everytime a new Planet is created , default value is 1000
     private static int nextId = 1000;
 
@@ -22,7 +23,7 @@ public abstract class Planet {
     /**
      * Constructor for objects of class Planet
      *
-     * @param id of the planet, >= 1000.  Default error value 1000
+     * id of the planet, >= 1000.  Default error value 1000
      * @param name Name of the planet, max 30 chars
      * @param mass mass of the planet, measured in ronnagrams earth is approx 6.0rg must be > 0.1 default to 0.1
      * @param diameter diameter of the planet, measured in kilometres must be > 0.5 default to 0.5
@@ -30,27 +31,28 @@ public abstract class Planet {
      * @param averageTemperature Average temperatur of the planet, Average surface temperature in °C must be a value between -400 and 400 default 0
      * @param hasLiquidWater if the planet has liquid water, 	true or false
      *
+     *
      */
     public Planet(String name, double mass, double diameter, double averageTemperature, String surfaceType, boolean hasLiquidWater ) {
-        this.id =getNextId();
+        setId(getNextId());
         incrementNextId();
-        this.name = name ;
-        this.mass = mass;
-        this.diameter= diameter;
-        this.surfaceType = surfaceType;
-        this.averageTemperature = averageTemperature;
-        this.hasLiquidWater = hasLiquidWater;
+        setName(name);
+        setMass(mass);
+        setDiameter(diameter);
+        setSurfaceType(surfaceType);
+        setAverageTemperature(averageTemperature);
+        setHasLiquidWater(hasLiquidWater);
     }
     // default values
     public Planet() {
-        this.id = getNextId();
+        setId(getNextId());
         incrementNextId();
-        this.name ="truncates to 30 chars" ;
-        this.mass = 0.1;
-        this.diameter= 0.5;
-        this.surfaceType = "(20 chars)";
-        this.averageTemperature = 0;
-        this.hasLiquidWater = false;
+        setName("truncates to 30 chars");
+        setMass(0.1);
+        setDiameter(0.5);
+        setSurfaceType("(20 chars)");
+        setAverageTemperature(0);
+        setHasLiquidWater(false);
     }
 
 
@@ -61,7 +63,7 @@ public abstract class Planet {
     // Concrete methods
     public double calculateGravity() {
         double xFactor =  Math.pow(6.67430, -11);
-        return mass*xFactor/Math.pow(diameter/2,2);
+        return getMass()*xFactor/Math.pow(getDiameter()/2,2);
     }
 
     public void incrementNextId(){

@@ -74,6 +74,7 @@ public class IcePlanet extends Planet{
                 + ", Average Temperature: " + getAverageTemperature()
                 + ", Surface Type: " + getSurfaceType()
                 + ", Has Liquid Water: " + hasLiquidWater()
+                + ", Gravity: " + calculateGravity()
                 +", " + classifyBody()
                 +", " + displayInfo();
     }
