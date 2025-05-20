@@ -123,7 +123,7 @@ public class GasPlanet extends Planet{
                 + ", Average Temperature: " + getAverageTemperature()
                 + ", Surface Type: " + getSurfaceType()
                 + ", Has Liquid Water: " + hasLiquidWater()
-                + ", Gravity: " + calculateGravity()
+                + ", Gravity: " + String.format("%.2e", calculateGravity())
                 +", " + classifyBody()
                 +", " + displayInfo();
     }

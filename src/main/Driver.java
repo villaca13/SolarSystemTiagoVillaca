@@ -11,7 +11,6 @@ import utils.CoreCompositionUtility;
 
 import java.io.File;
 import java.util.List;
-import java.util.Set;
 
 public class Driver {
 
@@ -49,16 +48,16 @@ public class Driver {
                 ------------------------------------------------------------------
                 |   1) Planets CRUD MENU                                         |
                 |                                                                |
-                |   2) Reports MENU                                              |                                          | 
+                |   2) Reports MENU                                              |
                 ------------------------------------------------------------------
                 |   3) Search Planets                                            |
                 |                                                                |
                 |   4) Sort Planets                                              |
-                ------------------------------------------------------------------            
+                ------------------------------------------------------------------
                 |   10) Load All                                                 |
                 |   11) Save All                                                 |
                 ------------------------------------------------------------------
-                |   0)  Exit                                                     |  
+                |   0)  Exit                                                     |
                 ------------------------------------------------------------------
                 ==>>  """);
         return option;
@@ -102,9 +101,10 @@ public class Driver {
                 |                    Planet Object Menu                          |
                 ------------------------------------------------------------------
                 |   1) Add a Planet Object                                       | 
-                |   2) Delete a Planet Object                                    |                                          | 
+                |   2) Delete a Planet Object                                    | 
                 |   3) List all Planet Object                                    |
                 |   4) Update a Planet Object                                    |
+                |                                                                |
                 |   0) Return to Main Menu                                       |  
                 ------------------------------------------------------------------
                 ==>>  """);
@@ -130,10 +130,6 @@ public class Driver {
         runMainMenu();
     }
 
-    private void runPlanetsMenu() {
-
-    }
-
     //---------------------
     //  Reports Menu Items
     //---------------------
@@ -146,9 +142,9 @@ public class Driver {
                 ------------------------------------------------------------------
                 |   1) Planets Overview (Number of Planets)                      |
                 |   2) List All Gas Planets                                      |
-                |   3) List All Ice Planets                                      |                                       | 
-                |   4) List All Planets heavier than                             | 
-                |   5) List All Planets Smaller than                             |                                           | 
+                |   3) List All Ice Planets                                      |
+                |   4) List All Planets heavier than                             |
+                |   5) List All Planets Smaller than                             |
                 |                                                                | 
                 |   0) Return to Main Menu                                       |  
                 ------------------------------------------------------------------
@@ -270,6 +266,9 @@ public class Driver {
 
             if (action == 'U') {
                 idToUpdate = ScannerInput.readNextInt("Enter the Planet ID to be Updated:  ");
+                while(!Planets.isValidId(idToUpdate)){
+                    idToUpdate = ScannerInput.readNextInt("Wrong ID entered! Insert the Planet ID to be Updated:  ");
+                }
             }
 
 
@@ -313,7 +312,7 @@ public class Driver {
                         while (coreOption <1 || coreOption>5 ) {
                             coreOption = ScannerInput.readNextInt("Wrong code ! Enter the Core Composition:  ");
                         }
-                        coreComposition = coreKeys.get(coreOption);
+                        coreComposition = coreKeys.get(coreOption-1);
 
                         radiationLevel = ScannerInput.readNextDouble("Enter the Radiation Level:  ");
                         GasPlanet newGasPlanet = new GasPlanet(planetName,mass, diameter, averageTemperature, surfaceType, hasLiquidWater,gasComposition, coreComposition, radiationLevel );
@@ -438,10 +437,11 @@ public class Driver {
                 ------------------------------------------------------------------
                 |                      Search Planets Menu                       |
                 ------------------------------------------------------------------
-                |   1) Search by ID                                              | 
-                |   2) Search by Index                                           | 
+                |   1) Search Planet by ID                                       | 
+                |   2) Search Planet by Index                                    | 
                 |   3) Search the top 5 most radiated Gas Planet                 | 
                 |   4) Search the top 5 biggest planets by diameter              | 
+                |   5) Search Planet by Name                                     | 
                 |                                                                |  
                 |   0) Return to Main Menu                                       |  
                 |                                                                |
@@ -455,6 +455,7 @@ public class Driver {
                 case 2 -> searchPlanetByIndex();
                 case 3 -> searchTopFiveRadiationLevel();
                 case 4 -> searchTopFiveDiameter();
+                case 5 -> searchPlanetByName();
                 default -> System.out.println("Invalid option entered: " + option);
             }
 
@@ -524,10 +525,12 @@ public class Driver {
     private void sortPlanets(){
         int option = ScannerInput.readNextInt("""
                 ------------------------------------------------------------------
-                |                      Sort Planets Menu                         |       
+                |                      Sort Planets Menu                         |
                 ------------------------------------------------------------------
                 |   1) Sort by Diameter Ascending                                | 
                 |   2) Sort by Diameter Descending                               | 
+                |   3) Sort Gas Planets by Radiation Level Descending            | 
+                |   4) Sort gravity                                              |                
                 |                                                                |  
                 |   0) Return to Main Menu                                       |  
                 |                                                                |
@@ -539,6 +542,8 @@ public class Driver {
             switch (option) {
                 case 1 -> sortPlanetByDiameterAscending();
                 case 2 -> sortPlanetByDiameterDescending();
+                case 3 -> sortGasPlanetByRadiationDescending();
+                case 4 -> sortPlanetsByGravityDescending();
 
                 default -> System.out.println("Invalid option entered: " + option);
             }
@@ -553,11 +558,13 @@ public class Driver {
     }
 
     private void sortPlanetByDiameterAscending() {
+        System.out.println("Planets sorted by diameter ascending:");
         Planets.sortByDiameterAscending();
         System.out.println( Planets.listAllPlanets());
     }
     //selection sort algorithm
     private void sortPlanetByDiameterDescending() {
+        System.out.println("Planets sorted by diameter descending:");
         Planets.sortByDiameterDescending();
         System.out.println( Planets.listAllPlanets());
     }
@@ -592,9 +599,33 @@ public class Driver {
     //---------------------
 // TODO search by different criteria i.e. look at the list methods and give options based on that.
 // TODO sort  (and give a list of options - not a recurring menu thou)
+    private void searchPlanetByName() {
+        String nameStartsWith = ScannerInput.readNextLine("Please enter the first letters of planet name to search by:");
+        System.out.println(Planets.searchByPlanetName(nameStartsWith));
+    }
 
+    //selection sort algorithm
+    private void sortGasPlanetByRadiationDescending() {
+        System.out.println("Gas Planets sorted by radiation level:");
+        List<Planet> sortByRadiationLevel = Planets.sortByRadiationDescending();
+        if (sortByRadiationLevel != null){
+            for (Planet planet : sortByRadiationLevel) {
+                System.out.println(planet);
+            }
+        }else
+            System.out.println("List is empty.");
+    }
 
-
+    private void sortPlanetsByGravityDescending() {
+        System.out.println("Planets sorted by gravity descending:");
+        List<Planet> sortByGravity = Planets.sortByGravityDescending();
+        if (sortByGravity != null){
+            for (Planet planet : sortByGravity) {
+                System.out.println(planet);
+            }
+        }else
+            System.out.println("List is empty.");
+    }
 
     //---------------------
     //  Helper Methods

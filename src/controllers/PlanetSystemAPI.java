@@ -7,8 +7,6 @@ import utils.ISerializer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-import utils.ISerializer;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -358,6 +356,30 @@ public class PlanetSystemAPI implements ISerializer {
     /**
      * Selection sort algorithm for sorting the arraylist of planets by diamenter ascending/Descending.
      */
+
+    /**
+     * This method returns a string containing all planets whose planet name starts with (regardless of case)
+     * the search string.  The index location of the planet in the arraylist is also returned.
+     *
+     * @param planetName  The string to search by
+     * @return  products whose product name contains the search string
+     */
+    public String searchByPlanetName(String planetName) {
+        String matchingProducts = "";
+        for(Planet planet : planetList ) {
+            if (planet.getName().toUpperCase().contains(planetName.toUpperCase())) {
+                matchingProducts += planetList.indexOf(planet) + ": " + planet + "\n";
+            }
+        }
+
+        if (matchingProducts.equals("")){
+            return "No planets match your search";
+        }
+        else{
+            return matchingProducts;
+        }
+    }
+
     public void sortByDiameterDescending(){
         for (int i = planetList.size() - 1; i >= 0; i--) {
             int highestIndex = 0;
@@ -404,6 +426,29 @@ public class PlanetSystemAPI implements ISerializer {
         }else
             return null;
     }
+
+    /**
+     * Selection sort algorithm for sorting the arraylist of planets by gravity Descending.
+     *
+     * @return a list of Planets sorted by gravity or null if a list is empty
+     */
+    public List<Planet> sortByGravityDescending(){
+        if( numberOfPlanets()>0){
+            for (int i = planetList.size()  - 1; i >= 0; i--) {
+                int highestIndex = 0;
+
+                for (int j = 0; j <= i; j++) {
+                    if ( planetList.get(j).calculateGravity() <  planetList.get(highestIndex).calculateGravity()) {
+                        highestIndex = j;
+                    }
+                }
+                swapPlanets(planetList , i, highestIndex);
+            }
+            return planetList;
+        }else
+            return null;
+    }
+
 
     private void swapPlanets(List<Planet> planets, int i, int j) {
         Planet smaller = planets.get(i);
