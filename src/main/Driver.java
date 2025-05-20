@@ -245,17 +245,35 @@ public class Driver {
         double radiationLevel;
         String iceComposition;
 
-        int option = ScannerInput.readNextInt("""
-                ------------------------------------------------------------------
-                |                      Planet Type Menu                          |       
-                ------------------------------------------------------------------
-                |   1) Gas Planet                                                | 
-                |   2) Ice Planet                                                |
-                |                                                                |  
-                |   0) Return to Planet Object Menu                              |  
-                |                                                                |
-                ------------------------------------------------------------------
-                ==>>  """);
+        int option = 0;
+
+        if (action == 'U') {
+            idToUpdate = ScannerInput.readNextInt("Enter the Planet ID to be Updated:  ");
+            while(!Planets.isValidId(idToUpdate)){
+                idToUpdate = ScannerInput.readNextInt("Wrong ID entered! Insert the Planet ID to be Updated:  ");
+            }
+            if( Planets.getPlanetById(idToUpdate).classifyBody().equals(Planet.GASPLANETS) ){
+                option = 1;
+                System.out.println("Gas Planet ID "+idToUpdate+" to be updated.");
+            }else{
+                option = 2;
+                System.out.println("Ice Planet ID "+idToUpdate+" to be updated.");
+            }
+        }
+        else {
+
+            option = ScannerInput.readNextInt("""
+                    ------------------------------------------------------------------
+                    |                      Planet Type Menu                          |
+                    ------------------------------------------------------------------
+                    |   1) Gas Planet                                                | 
+                    |   2) Ice Planet                                                |
+                    |                                                                |  
+                    |   0) Return to Planet Object Menu                              |  
+                    |                                                                |
+                    ------------------------------------------------------------------
+                    ==>>  """);
+        }
 
         if (option >= 0 && option <= 2) {
 
@@ -263,15 +281,6 @@ public class Driver {
             if (option == 0) {
                 planetsMenu();
             }
-
-            if (action == 'U') {
-                idToUpdate = ScannerInput.readNextInt("Enter the Planet ID to be Updated:  ");
-                while(!Planets.isValidId(idToUpdate)){
-                    idToUpdate = ScannerInput.readNextInt("Wrong ID entered! Insert the Planet ID to be Updated:  ");
-                }
-            }
-
-
 
             //Ask the user to type in either a Y or an N.  This is then
             //converted to either a True or a False (i.e. a boolean value).
